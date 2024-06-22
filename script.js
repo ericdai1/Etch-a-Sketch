@@ -11,7 +11,7 @@ const body = document.querySelector('body');
 // Adds a button that prompts the user to enter the # of squares they want for each side of the new grid
 function setUpNewGridButton() {
   let newGridButton = document.createElement('button');
-  newGridButton.textContent = 'Create New Grid';
+  newGridButton.textContent = 'Create New Sketch';
   body.appendChild(newGridButton);
 
   newGridButton.addEventListener('click', () => {
@@ -56,6 +56,7 @@ function createGrid() {
   }
 
   setGridSize();
+  setGridColoring();
 }
 
 // Main function to add a certain sized div into the grid
@@ -76,7 +77,7 @@ function setGridSize() {
 
   gridWidth = window.innerWidth;
   gridHeight = window.innerHeight;
-  
+
   gridBoxes.forEach((gridBox) => {
     gridBox.style.width = `${(gridWidth - BORDER_WIDTH) / gridDimensions}px`;
 
@@ -84,19 +85,28 @@ function setGridSize() {
   });
 }
 
+function setGridColoring() {
+  // Handle hover event for each box of the 16x16 grid
+  const gridBoxes = document.querySelectorAll('.grid-box');
+  gridBoxes.forEach((gridBox) => {
+    gridBox.addEventListener('mouseenter', () => {
+      gridBox.style.backgroundColor = getRandomColor();
+    });
+  })
+}
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  
+  for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+  }
+
+  return color;
+}
+
 // Main meat of the project comes from the following three functions, with inner helper functions in the correct order.
 setUpNewGridButton();
 setUpContainer();
 createGrid();
-
-// Handle hover event for each box of the 16x16 grid
-const gridBoxes = document.querySelectorAll('.grid-box');
-gridBoxes.forEach((gridBox) => {
-  gridBox.addEventListener('mouseenter', () => {
-    gridBox.classList.add('hover');
-  });
-
-  gridBox.addEventListener('mouseleave', () => {
-    gridBox.classList.remove('hover');
-  });
-})
