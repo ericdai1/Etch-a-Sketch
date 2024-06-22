@@ -11,7 +11,7 @@ const body = document.querySelector('body');
 // Adds a button that prompts the user to enter the # of squares they want for each side of the new grid
 function setUpNewGridButton() {
   let newGridButton = document.createElement('button');
-  newGridButton.textContent = 'Create New Sketch';
+  newGridButton.textContent = 'Create New Grid';
   body.appendChild(newGridButton);
 
   newGridButton.addEventListener('click', () => {
