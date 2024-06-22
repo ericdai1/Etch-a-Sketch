@@ -19,14 +19,14 @@ function setUpNewGridButton() {
       gridDimensions = prompt('Enter the # of squares would you like on each side of the new Grid:');
 
       if (gridDimensions == null || isNaN(gridDimensions) || gridDimensions > 100 || gridDimensions < 1) {
-        throw new Error("Not a valid number, or dimensions are too large.");
+        throw new Error("Invalid input. Please enter a valid number up to 100");
       }
       
       resetGrid();
       createGrid();
     }
     catch (error) {
-      alert('Invalid input. Please enter a valid number.')
+      alert(error);
     }
   })
 }
