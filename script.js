@@ -5,6 +5,7 @@ const BUTTON_HEIGHT = 80;
 let gridWidth = window.innerWidth;
 let gridHeight = window.innerHeight;
 let gridDimensions = 16;
+let isMouseDown = false;
 
 const body = document.querySelector('body');
 
@@ -35,6 +36,16 @@ function setUpContainer() {
   let gridContainer = document.createElement('div');
   gridContainer.id = 'container';
   body.appendChild(gridContainer);
+}
+
+function setUpMouseMoveEvents() {
+  body.addEventListener('mousedown', () => {
+    isMouseDown = true;
+  });
+  
+  body.addEventListener('mouseup', () => {
+    isMouseDown = false;
+  });
 }
 
 // Empty out the grid due to a new one being requested, and set the correct dimensions for each grid box
@@ -80,7 +91,6 @@ function setGridSize() {
 
   gridBoxes.forEach((gridBox) => {
     gridBox.style.width = `${(gridWidth - BORDER_WIDTH) / gridDimensions}px`;
-
     gridBox.style.height = `${(gridHeight - BUTTON_HEIGHT) / gridDimensions}px`;
   });
 }
@@ -90,7 +100,9 @@ function setGridColoring() {
   const gridBoxes = document.querySelectorAll('.grid-box');
   gridBoxes.forEach((gridBox) => {
     gridBox.addEventListener('mouseenter', () => {
-      gridBox.style.backgroundColor = getRandomColor();
+      if (isMouseDown) {
+        gridBox.style.backgroundColor = getRandomColor();
+      }
     });
   })
 }
@@ -109,4 +121,5 @@ function getRandomColor() {
 // Main meat of the project comes from the following three functions, with inner helper functions in the correct order.
 setUpNewGridButton();
 setUpContainer();
+setUpMouseMoveEvents();
 createGrid();
